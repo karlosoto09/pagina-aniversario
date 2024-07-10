@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenida</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap'); /* Importa una fuente tipo dibujo */
+        
+        body {
+            font-family: Arial, sans-serif;
+            background: url('fondo.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+            text-align: center;
+            padding: 50px;
+            overflow-x: hidden;
+            overflow-y: scroll; /* Hacer la página deslizable hacia abajo */
+            height: 100vh;
+        }
+        h1, h2 {
+            color: #ff6699;
+            position: relative;
+        }
+        .hidden {
+            display: none;
+        }
+        #password-section {
+            margin-top: 50px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+        input[type="password"] {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #ff6699;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #ff3366;
+        }
+        .heart {
+            position: absolute;
+            color: #ff6699;
+            font-size: 24px;
+            animation: float 5s infinite ease-in-out;
+        }
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-500px);
+                opacity: 0;
+            }
+        }
+        #counter-section {
+            font-family: 'Amatic SC', cursive; /* Fuente tipo dibujo */
+            color: #000; /* Cambia el color del texto del contador a negro */
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 2em;
+            background-color: transparent; /* Fondo transparente */
+            animation: fadeIn 1s forwards;
+            animation-delay: 2s;
+        }
+        .animated-text {
+            font-family: 'Amatic SC', cursive; /* Fuente tipo dibujo */
+            font-size: 4em; /* Aumenta significativamente el tamaño del texto */
+            animation: pulse 1s infinite, fadeIn 1s forwards;
+        }
+        .tulip-image {
+            margin-top: 20px;
+            width: 300px; /* Ajusta el tamaño según sea necesario */
+            opacity: 0;
+            animation: fadeIn 1s forwards;
+            animation-delay: 3s;
+            cursor: pointer; /* Cambia el cursor para indicar que es clicable */
+            transition: transform 1s ease-in-out; /* Añadir transición para animación de desplazamiento */
+        }
+        #touch-here {
+            font-family: 'Amatic SC', cursive; /* Fuente tipo dibujo */
+            font-size: 2em;
+            color: #ff6699;
+            animation: fadeIn 1s forwards;
+            animation-delay: 4s;
+            opacity: 0;
+        }
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        #letter-section {
+            font-family: Arial, sans-serif; /* Fuente Arial */
+            color: #000; /* Color negro */
+            font-size: 1.5em; /* Tamaño de fuente reducido */
+            margin-top: 20px;
+            opacity: 0;
+            display: none;
+            vertical-align: top;
+            animation: fadeIn 1s forwards;
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco translúcido */
+            padding: 20px;
+            border-radius: 10px;
+        }
+        #photo-section img {
+            width: 300px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        #container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            margin-top: 50px;
+        }
+        #countdown-section {
+            font-family: 'Amatic SC', cursive; /* Fuente tipo dibujo */
+            color: #000; /* Cambia el color del texto a negro */
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 2em;
+            background-color: transparent; /* Fondo transparente */
+            animation: fadeIn 1s forwards;
+        }
+        #countdown {
+            font-size: 1.5em;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="password-section">
+        <h2>Bienvenida Amor de mi Vida</h2>
+        <p>Introduce la contraseña para continuar:</p>
+        <p>Pista: Fecha en la que nos hicimos novios (solo números y año completo)</p>
+        <input type="password" id="password" placeholder="Contraseña" onkeypress="handleKeyPress(event)">
+        <button onclick="checkPassword()">Entrar</button>
+    </div>
+    <h1 id="main-title" class="hidden">Bienvenida Amor de mi Vida</h1>
+    <div id="counter-section" class="hidden">
+        <h2 id="days-text">Días juntos: <span id="days-counter">0</span></h2>
+    </div>
+    <div id="container">
+        <div id="flower-section" class="hidden">
+            <img src="tulipanes.png" alt="Ramo de Tulipanes" class="tulip-image" onclick="showLetterAndPhoto()">
+            <p id="touch-here" class="hidden">Toca aquí</p>
+            <div id="countdown-section" class="hidden">
+                <h2>Tiempo restante para volver a estar juntos:</h2>
+                <div id="countdown">
+                    <span id="days">00</span>d
+                    <span id="hours">00</span>h
+                    <span id="minutes">00</span>m
+                    <span id="seconds">00</span>s
+                </div>
+            </div>
+        </div>
+        <div id="letter-section">
+            <p>El día de hoy celebramos un día muy especial, nuestro medio año juntos. Hemos pasado por muchos momentos a lo largo del tiempo que nos conocemos, pero no puedo evitar emocionarme al pensar en todo lo que hemos compartido durante estos seis meses.</p>
+            <p>Desde el día de nuestra primera salida, supe que había algo único en ti. La forma en que sonríes, tu risa, tus ojos, todo de ti me encanta, simplemente tu presencia me ha hecho sentir el hombre más afortunado del mundo. Desde ese día, hemos construido un vínculo mucho más grande. Hemos crecido juntos, enfrentado varios desafíos y también celebrado logros, siempre apoyándonos mutuamente.</p>
+            <p>Eres mi compañera, mi mejor amiga y el amor de mi vida. Aprecio mucho el amor que me das, cada palabra de aliento en algún mal momento y tu apoyo incondicional para todo. Este medio año es solo el comienzo de una vida llena de amor y aventuras juntos, recuerda que tenemos pendiente conocer muchos pueblitos. Obviamente, también seguiremos afrontando algún que otro problema, pero nunca nos rindamos. Recuerda siempre que somos tú y yo contra todo, somos un equipo y una sola persona.</p>
+            <p>Gracias por ser tú, por estar a mi lado y por hacerme sentir tan amado. Te amo con todo mi corazón, mi Grace.</p>
+            <div id="photo-section">
+                <img src="nueva_foto.jpg" alt="Nosotros">
+            </div>
+        </div>
+    </div>
+    <script>
+        let heartInterval;
+
+        function calculateDaysTogether() {
+            const startDate = new Date('2024-01-12'); // Cambia esta fecha a la de cuando se hicieron novios
+            const today = new Date();
+            const timeDifference = today - startDate;
+            const daysTogether = Math.floor(timeDifference / (1000 * 3600 * 24));
+            animateCounter(daysTogether);
+        }
+
+        function animateCounter(target) {
+            const counterElement = document.getElementById('days-counter');
+            let count = 0;
+            const increment = target / 100; // Ajusta la duración de la animación cambiando este valor
+
+            function updateCounter() {
+                count += increment;
+                if (count < target) {
+                    counterElement.innerText = Math.floor(count);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counterElement.innerText = target;
+                }
+            }
+
+            updateCounter();
+        }
+
+        function checkPassword() {
+            const password = document.getElementById('password').value;
+            const correctPassword = '12012024'; // Cambia esto a la contraseña que quieras usar
+
+            if (password === correctPassword) {
+                document.getElementById('password-section').style.display = 'none';
+                document.getElementById('main-title').classList.remove('hidden');
+                document.getElementById('main-title').innerText = 'Feliz Medio Año Juntos mi Greycita';
+                document.getElementById('main-title').classList.add('animated-text');
+                document.body.style.background = '#F5F5DC'; // Cambia el fondo a color #F5F5DC
+                setTimeout(() => {
+                    document.getElementById('counter-section').classList.remove('hidden');
+                    calculateDaysTogether();
+                }, 1000);
+                setTimeout(() => {
+                    document.getElementById('flower-section').classList.remove('hidden');
+                    document.getElementById('touch-here').classList.remove('hidden');
+                }, 2000);
+                setTimeout(() => {
+                    document.getElementById('countdown-section').classList.remove('hidden');
+                    const endDate = new Date('2024-12-01T00:00:00'); // Fecha de fin para la cuenta regresiva
+                    startCountdown(endDate);
+                }, 3000);
+                clearInterval(heartInterval);
+            } else {
+                alert('Contraseña incorrecta. Inténtalo de nuevo.');
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                checkPassword();
+            }
+        }
+
+        function createHeart() {
+            const mainTitle = document.getElementById('main-title');
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerText = '❤️';
+            heart.style.left = Math.random() * mainTitle.offsetWidth + 'px';
+            heart.style.top = Math.random() * mainTitle.offsetHeight + 'px';
+            mainTitle.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        function showLetterAndPhoto() {
+            const tulipImage = document.querySelector('.tulip-image');
+            tulipImage.style.transform = 'translateX(-50px)'; // Desplazar la imagen a la izquierda
+            document.getElementById('touch-here').style.display = 'none'; // Ocultar el texto "Toca aquí"
+            setTimeout(() => {
+                document.getElementById('letter-section').style.display = 'block';
+                document.getElementById('letter-section').style.opacity = 1;
+                document.getElementById('letter-section').style.animation = 'fadeIn 1s forwards';
+            }, 1000);
+        }
+
+        function startCountdown(endDate) {
+            const countdownElement = document.getElementById('countdown');
+            const daysElement = document.getElementById('days');
+            const hoursElement = document.getElementById('hours');
+            const minutesElement = document.getElementById('minutes');
+            const secondsElement = document.getElementById('seconds');
+
+            function updateCountdown() {
+                const now = new Date();
+                const timeDifference = endDate - now;
+
+                if (timeDifference > 0) {
+                    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+
+                    daysElement.innerText = days < 10 ? '0' + days : days;
+                    hoursElement.innerText = hours < 10 ? '0' + hours : hours;
+                    minutesElement.innerText = minutes < 10 ? '0' + minutes : minutes;
+                    secondsElement.innerText = seconds < 10 ? '0' + seconds : seconds;
+                } else {
+                    clearInterval(countdownInterval);
+                    countdownElement.innerText = '¡El tiempo ha llegado!';
+                }
+            }
+
+            const countdownInterval = setInterval(updateCountdown, 1000);
+            updateCountdown(); // Inicializar inmediatamente
+        }
+
+        heartInterval = setInterval(createHeart, 500);
+    </script>
+</body>
+</html>
